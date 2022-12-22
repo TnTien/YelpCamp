@@ -56,6 +56,17 @@ app.put('/campgrounds/:id', async (req, res) => {
     res.redirect(`/campgrounds/${campground._id}`)
 })
 
+app.get('/campgrounds/:id/delete', async (req, res) => {
+    const campground = await Campground.findById(req.params.id)
+    res.render('campgrounds/delete', {campground})
+})
+
+app.delete('/campgrounds/:id', async(req, res) => {
+    const { id } = req.params;
+    const deleteCampground = await Campground.findByIdAndDelete(id);
+    res.redirect('/campgrounds');
+})
+
 app.listen(8080, () => {
     console.log('Serving on port 8080')
 })
